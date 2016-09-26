@@ -5,16 +5,16 @@ The SmartEdge service allows any IoT device, cloud, sensor or similar to be easi
 
 The concept is simple. Use in for incoming data. Out for outgoing data. Wrap it into MQTT. Now integrate anything that generates data or can accept actions or data.
 
-In: Wrap any service that gets data via a myservice.in and either read the data from an executable that gets polled or from an mqtt topic at in/myservice (call inmqtt to get the mqtt configuration).
-Out: Listen to the MQTT topic out/myservice and call myservice.out with any data.
+In: Wrap any service that gets data via a myservice-in and either read the data from an executable that gets polled or from an mqtt topic at in/myservice (call inmqtt to get the mqtt configuration).
+Out: Listen to the MQTT topic out/myservice and call myservice-out with any data.
 Init: Initialize your service for the first time.
 Config: (Re)Configure your service
 
 Basic concepts, you need to create 4 exectuables that accept a JSON file as input:
-   (myservice).in - command to get data from myservice
-   (myservice).out - command to get myservice to do an action or send data
-   (myservice).init - intialize the service - called 1 time
-   (myservice).config - configure the service
+   (myservice)-in - command to get data from myservice
+   (myservice)-out - command to get myservice to do an action or send data
+   (myservice)-init - intialize the service - called 1 time
+   (myservice)-config - configure the service
 
  The (myservice) can be wrapped inside an MQTT subscriber with the topic in/(myservice) and invoke (myservice).in
  or alternatively call smartedge inmqtt to get the JSON configuration to connect to the MQTT server to pass data.

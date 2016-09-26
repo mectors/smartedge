@@ -10,19 +10,19 @@ apps:
         command: smartedge $1
         plugs: [network-bind, network]
     myservice.in:
-      command: myservice.in $1
+      command: myservice-in $1
       plugs: [network-bind, network]
     myservice.out:
-      command: myservice.out $1
+      command: myservice-out $1
       plugs: [network-bind, network]
     myservice.init:
-      command: myservice.init $1
+      command: myservice-init $1
       plugs: [network-bind, network]
     myservice.config:
-      command: myservice.config $1
+      command: myservice-config $1
       plugs: [network-bind, network]
 
 parts:
      smartedge:
         plugin: go
-        source: src/smartedge
+        source: https://github.com/mectors/smartedge.git

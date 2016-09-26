@@ -2,12 +2,12 @@
   The SmartEdge service allows any IoT device, cloud, sensor or similar to be easily integrated.
 
 	Basic concepts, you need to create 4 exectuables that accept a JSON file as input:
-	   (myservice).in - command to get data from myservice
-		 (myservice).out - command to get my service to do an action or data
-		 (myservice).init - intialize the service - called 1 time
-		 (myservice).config - configure the service
+	   (myservice)-in - command to get data from myservice
+		 (myservice)-out - command to get my service to do an action or data
+		 (myservice)-init - intialize the service - called 1 time
+		 (myservice)-config - configure the service
 
-		 The (myservice) can be wrapped inside an MQTT subscriber with the topic in/(myservice) and invoke (myservice).in
+		 The (myservice) can be wrapped inside an MQTT subscriber with the topic in/(myservice) and invoke (myservice)-in
 		 or alternatively call smartedge inmqtt to get the JSON configuration to connect to the MQTT server to pass data.
 
 		 The (myservice) can listen for actions on the MQTT topic out/(myservice). Just start the service with smartedge outmqtt.
@@ -184,7 +184,7 @@ func waitForActions(transportCfg Transport, cli client.Client) {
 						// Handler is the handler which handles the Application Message
 						// sent from the Server.
 						Handler: func(topicName, message []byte) {
-								cmd := service+".out"
+								cmd := service+"-out"
 								args := []string{string(message)}
 								executeSend(cmd,args,cli)
 						},
@@ -261,7 +261,7 @@ func main() {
 		isInit(*inconfdir)
 		transportCfg := readTransport(*inconfdir)
 		service = transportCfg.ClientID
-		cmd := service+".in"
+		cmd := service+"-in"
 		log.Print(cmd)
 		args := []string{*incfg}
 		// Connect to the MQTT Server.
@@ -358,13 +358,13 @@ case outmqtt.FullCommand():
 		if *initjson != "" {
 			err := ioutil.WriteFile(*confdir+"/initservice.json", []byte(*initjson), 0600)
 			check(err)
-			logMsg(execute(service+".init",[]string{*initjson}))
+			logMsg(execute(service+"-init",[]string{*initjson}))
 		}
 
 		if *configjson != "" {
 			err := ioutil.WriteFile(*confdir+"/configservice.json", []byte(*configjson), 0600)
 			check(err)
-			logMsg(execute(service+".config",[]string{*configjson}))
+			logMsg(execute(service+"-config",[]string{*configjson}))
 		}
 	}
 }
